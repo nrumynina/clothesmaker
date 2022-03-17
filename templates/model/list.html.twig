@@ -1,0 +1,13 @@
+{% extends './base.html.twig' %}
+
+
+{% block body %}
+
+    {% for model in modelList %}
+        <div style="color: darkslategrey">
+            {{ model.id }}
+            {{ model.name }}
+        </div>
+    {% endfor %}
+
+{% endblock %}
