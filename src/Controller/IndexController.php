@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Cloth;
+use App\Entity\Model;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -47,6 +48,16 @@ class IndexController extends AbstractController
      */
     public function showAction()
     {
+        $entityManager = $this->doctrine->getManager();
+        $repository = $entityManager->getRepository(Model::class);
+
+        /** @var Model[] $model */
+        $model = $repository->findAll();
+
+        $params = [
+            'modelList' => $model
+        ];
+
         return $this->render('index/show.html.twig');
     }
 }

@@ -1,0 +1,7 @@
+{% extends '@SonataAdmin/CRUD/base_show_field.html.twig' %}
+
+{% block field %}
+    <img src="{{ vich_uploader_asset(object) }}"
+         alt="{{ object.image.name }}"
+         style="width:auto; height:600px;"/>
+{% endblock %}
