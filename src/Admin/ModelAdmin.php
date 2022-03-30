@@ -18,28 +18,38 @@ class ModelAdmin extends AbstractAdmin
     {
         $form
             ->add('name', TextType::class)
+            ->add('SKU')
+            ->add('description')
             ->add('imageFile', VichImageType::class, [
                 'delete_label' => 'Remove Image',
+                'required' => false,
             ]);
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagrid): void
     {
-        $datagrid->add('name');
+        $datagrid
+            ->add('name')
+            ->add('SKU');
     }
 
     protected function configureListFields(ListMapper $list): void
     {
-        $list->addIdentifier('name')
+        $list
+            ->addIdentifier('name')
             ->add('imageFile', null, [
                 'template' => 'admin/model_list_field_image_file.html.twig',
-            ]);
+            ])
+            ->add('SKU')
+            ->add('description');
     }
 
     protected function configureShowFields(ShowMapper $show): void
     {
         $show
             ->add('name')
+            ->add('SKU')
+            ->add('description')
             ->add('imageFile', null, [
                 'template' => 'admin/model_show_field_image_file.html.twig',
             ]);

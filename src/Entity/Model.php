@@ -31,6 +31,20 @@ class Model
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255, options={"default": ""})
+     */
+    private $SKU = '';
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
+
+    /**
      * @var File|null
      *
      * @Vich\UploadableField(mapping="model_image", fileNameProperty="image.name", size="image.size",
@@ -70,6 +84,30 @@ class Model
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getSKU(): string
+    {
+        return $this->SKU;
+    }
+
+    public function setSKU(string $SKU): self
+    {
+        $this->SKU = $SKU;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
