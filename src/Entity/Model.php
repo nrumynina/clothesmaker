@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ModelRepository;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use Symfony\Component\HttpFoundation\File\File;
-use Vich\UploaderBundle\Entity\File as EmbeddedFile;
 
 /**
  * @ORM\Entity(repositoryClass=ModelRepository::class)
- * @Vich\Uploadable
  */
 class Model
 {
@@ -45,30 +42,15 @@ class Model
     private $description;
 
     /**
-     * @var File|null
+     * @var ArrayCollection<Image>
      *
-     * @Vich\UploadableField(mapping="model_image", fileNameProperty="image.name", size="image.size",
-     *     mimeType="image.mimeType", originalName="image.originalName", dimensions="image.dimensions")
+     * @ORM\OneToMany(targetEntity="Image", mappedBy="model", cascade={"persist"}, orphanRemoval=true)
      */
-    private $imageFile;
-
-    /**
-     * @var EmbeddedFile
-     *
-     * @ORM\Embedded(class="Vich\UploaderBundle\Entity\File")
-     */
-    private $image;
-
-    /**
-     * @var \DateTimeInterface|null
-     *
-     * @ORM\Column(type="datetime")
-     */
-    private $updatedAt;
+    private $images;
 
     public function __construct()
     {
-        $this->image = new EmbeddedFile();
+        $this->images = new ArrayCollection();
     }
 
     public function getId()
@@ -112,27 +94,26 @@ class Model
         return $this;
     }
 
-    public function setImageFile(?File $imageFile = null): void
+    /**
+     * @return ArrayCollection<Image>
+     */
+    public function getImages()
     {
-        $this->imageFile = $imageFile;
-
-        if (null !== $imageFile) {
-            $this->updatedAt = new \DateTimeImmutable();
-        }
+        return $this->images;
     }
 
-    public function getImageFile(): ?File
+    public function addImage(Image $image): self
     {
-        return $this->imageFile;
+        $image->setModel($this);
+        $this->images->add($image);
+
+        return $this;
     }
 
-    public function setImage(EmbeddedFile $image): void
+    public function removeImage(Image $image): self
     {
-        $this->image = $image;
-    }
+        $this->images->removeElement($image);
 
-    public function getImage(): ?EmbeddedFile
-    {
-        return $this->image;
+        return $this;
     }
 }

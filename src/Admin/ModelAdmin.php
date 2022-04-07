@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Admin;
 
+use App\Form\Type\ImageType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class ModelAdmin extends AbstractAdmin
 {
@@ -20,9 +21,11 @@ class ModelAdmin extends AbstractAdmin
             ->add('name', TextType::class)
             ->add('SKU')
             ->add('description')
-            ->add('imageFile', VichImageType::class, [
-                'delete_label' => 'Remove Image',
-                'required' => false,
+            ->add('images', CollectionType::class, [
+                'entry_type' => ImageType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
             ]);
     }
 
@@ -37,7 +40,7 @@ class ModelAdmin extends AbstractAdmin
     {
         $list
             ->addIdentifier('name')
-            ->add('imageFile', null, [
+            ->add('images', CollectionType::class, [
                 'template' => 'admin/model_list_field_image_file.html.twig',
             ])
             ->add('SKU')
@@ -50,7 +53,7 @@ class ModelAdmin extends AbstractAdmin
             ->add('name')
             ->add('SKU')
             ->add('description')
-            ->add('imageFile', null, [
+            ->add('images', CollectionType::class, [
                 'template' => 'admin/model_show_field_image_file.html.twig',
             ]);
     }

@@ -1,7 +1,9 @@
 {% extends '@SonataAdmin/CRUD/base_list_field.html.twig' %}
 
 {% block field %}
-    <img src="{{ vich_uploader_asset(object) }}"
-         alt="{{ object.image.name }}"
-         style="width:auto; height:80px;"/>
+    {% if object.images.first is not empty %}
+        <img src="{{ vich_uploader_asset(object.images.first) }}"
+             alt="{{ object.images.first.image.name }}"
+             style="width:auto; height:80px;"/>
+    {% endif %}
 {% endblock %}
