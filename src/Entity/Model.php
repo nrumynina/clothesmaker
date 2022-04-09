@@ -13,6 +13,12 @@ use App\Repository\ModelRepository;
  */
 class Model
 {
+    public const SIZES = [
+        'xl-women' => 'XL Женщины',
+        'xl-man' => 'XL Мужчины',
+        'l-man' => 'L Мужчины',
+    ];
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -47,6 +53,13 @@ class Model
      * @ORM\OneToMany(targetEntity="Image", mappedBy="model", cascade={"persist"}, orphanRemoval=true)
      */
     private $images;
+
+    /**
+     * @var string[]|null
+     *
+     * @ORM\Column(type="simple_array", nullable=true)
+     */
+    private $sizes = null;
 
     public function __construct()
     {
@@ -114,6 +127,17 @@ class Model
     {
         $this->images->removeElement($image);
 
+        return $this;
+    }
+
+    public function getSizes(): ?array
+    {
+        return $this->sizes;
+    }
+
+    public function setSizes(?array $sizes): self
+    {
+        $this->sizes = $sizes;
         return $this;
     }
 }

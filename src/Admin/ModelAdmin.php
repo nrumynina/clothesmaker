@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\Admin;
 
+use App\Entity\Model;
 use App\Form\Type\ImageType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
@@ -20,6 +22,10 @@ class ModelAdmin extends AbstractAdmin
         $form
             ->add('name', TextType::class)
             ->add('SKU')
+            ->add('sizes', ChoiceType::class, [
+                'choices' => Model::SIZES,
+                'multiple' => true,
+            ])
             ->add('description')
             ->add('images', CollectionType::class, [
                 'entry_type' => ImageType::class,

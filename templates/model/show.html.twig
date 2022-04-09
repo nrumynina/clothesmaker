@@ -75,7 +75,7 @@
             transition: background-color 0.6s ease;
         }
 
-        .active, .dot:hover {
+        .active-img, .dot:hover {
             background-color: #717171;
         }
 
@@ -95,15 +95,14 @@
     <section class="py-5">
         <div class="container px-4 px-lg-5 my-5">
             <div class="row gx-4 gx-lg-5 align-items-center">
+
                 <div class="slideshow-container">
                     <!-- Full-width images with number and caption text -->
-
                     {% if model.images.first is not empty %}
                         {% for image in model.images %}
-                            <div class="mySlides fade-carousel {% if loop.first %}active{% endif %}">
+                            <div class="mySlides fade-carousel {% if loop.first %}active-img{% endif %}">
                                 <div class="numbertext">{{ loop.index }} / {{ loop.length }}</div>
                                 <img src="{{ vich_uploader_asset(image) }}" style="width:100%">
-                                <div class="text">{{ image.image.name }}</div>
                             </div>
                         {% endfor %}
                     {% endif %}
@@ -111,18 +110,16 @@
                     <!-- Next and previous buttons -->
                     <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                     <a class="next" onclick="plusSlides(1)">&#10095;</a>
-
-{#                    <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{ vich_uploader_asset(model.images.first) }}" alt="{{ model.images.first.image.name }}" /></div>#}
                 </div>
+
                 <div class="col-md-6">
-                    <div class="small mb-1">SKU: BST-498</div>
+                    <div class="small mb-1">SKU: {{ model.SKU }}</div>
                     <h1 class="display-5 fw-bolder">{{ model.name }}</h1>
                     <div class="fs-5 mb-5">
                         <span>$40.00</span>
                     </div>
                     <p class="lead">{{ model.description }}</p>
                     <div class="d-flex">
-                        <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
                         <button class="btn btn-outline-dark flex-shrink-0" type="button">
                             <a href="{{ path('order_create', {model_id: model.id}) }}">
                                 <i class="bi-cart-fill me-1"></i>
@@ -131,6 +128,7 @@
                         </button>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
@@ -160,7 +158,7 @@
                 dots[i].className = dots[i].className.replace(" active", "");
             }
             slides[slideIndex-1].style.display = "block";
-            dots[slideIndex-1].className += " active";
+            // dots[slideIndex-1].className += " active";
         }
     </script>
 {% endblock %}

@@ -38,6 +38,8 @@ class ModelController extends AbstractController
      */
     public function showAction(Model $model)
     {
+//        OrderType
+
         return $this->render('model/show.html.twig', [
             'model' => $model
         ]);
