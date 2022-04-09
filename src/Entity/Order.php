@@ -9,6 +9,7 @@ use App\Repository\OrderRepository;
 
 /**
  * @ORM\Entity(repositoryClass=OrderRepository::class)
+ * @ORM\Table(name="`order`")
  */
 class Order
 {
@@ -20,14 +21,6 @@ class Order
     private $id;
 
     /**
-     * @var Cart
-     *
-     * @ORM\ManyToOne(targetEntity="Cart", inversedBy="orders")
-     * @ORM\JoinColumn(name="cart_id", referencedColumnName="id", nullable=false)
-     */
-    private $cart;
-
-    /**
      * @var Model
      *
      * @ORM\ManyToOne(targetEntity="Model")
@@ -35,24 +28,22 @@ class Order
      */
     private $model;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255)
+     */
+    private $size;
+
     public function getId()
     {
         return $this->id;
     }
 
-    public function getCart(): Cart
-    {
-        return $this->cart;
-    }
-
-    public function setCart(Cart $cart): self
-    {
-        $this->cart = $cart;
-
-        return $this;
-    }
-
-    public function getModel(): Model
+    /**
+     * @return Model
+     */
+    public function getModel()
     {
         return $this->model;
     }
@@ -60,6 +51,18 @@ class Order
     public function setModel(Model $model): self
     {
         $this->model = $model;
+
+        return $this;
+    }
+
+    public function getSize(): string
+    {
+        return $this->size;
+    }
+
+    public function setSize(string $size): self
+    {
+        $this->size = $size;
 
         return $this;
     }

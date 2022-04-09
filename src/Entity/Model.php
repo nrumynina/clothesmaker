@@ -14,7 +14,7 @@ use App\Repository\ModelRepository;
 class Model
 {
     public const SIZES = [
-        'xl-women' => 'XL Женщины',
+        'm-man' => 'M Мужчины',
         'xl-man' => 'XL Мужчины',
         'l-man' => 'L Мужчины',
     ];

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Model;
+use App\Entity\Order;
+use App\Form\Type\OrderType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -38,10 +40,14 @@ class ModelController extends AbstractController
      */
     public function showAction(Model $model)
     {
-//        OrderType
+        $order = (new Order())
+            ->setModel($model);
+        $form = $this->createForm(OrderType::class, $order);
 
-        return $this->render('model/show.html.twig', [
-            'model' => $model
+        return $this->renderForm('model/show.html.twig', [
+            'model' => $model,
+            'order' => $order,
+            'order_form' => $form,
         ]);
     }
 }
