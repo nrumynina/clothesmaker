@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Entity\Model;
 use App\Entity\Order;
 use App\Form\Type\OrderType;
+use App\Security\ModelVoter;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -40,6 +41,8 @@ class ModelController extends AbstractController
      */
     public function showAction(Model $model)
     {
+        $this->denyAccessUnlessGranted(ModelVoter::SHOW, $model);
+
         $order = (new Order())
             ->setModel($model);
         $form = $this->createForm(OrderType::class, $order);
