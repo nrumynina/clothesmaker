@@ -2,9 +2,14 @@
 
 namespace App\Repository;
 
-use Doctrine\ORM\EntityRepository;
+use App\Entity\Cart;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
-class CartRepository extends EntityRepository
+class CartRepository extends ServiceEntityRepository
 {
-
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Cart::class);
+    }
 }

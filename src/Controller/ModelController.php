@@ -41,7 +41,7 @@ class ModelController extends AbstractController
      */
     public function showAction(Model $model)
     {
-        $this->denyAccessUnlessGranted(ModelVoter::SHOW, $model);
+//        $this->denyAccessUnlessGranted(ModelVoter::SHOW, $model);
 
         $order = (new Order())
             ->setModel($model);
