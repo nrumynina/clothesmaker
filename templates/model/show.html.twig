@@ -153,18 +153,27 @@
 
             var data = $(this).serializeArray();
 
-            console.log(data);
-
             $.ajax({
                 url: '{{ path('order_create') }}',
                 type: "POST",
                 dataType: "json",
                 data: data,
                 success: function (response) {
+                    refreshCartCount();
                     alert(response['success']);
                 }
             });
         });
+
+        function refreshCartCount() {
+            $.ajax({
+                url: '{{ path('cart_count') }}',
+                type: "GET",
+                success: function (response) {
+                    $('#cart-count').text(response['count']);
+                }
+            });
+        }
 
         let slideIndex = 1;
         showSlides(slideIndex);

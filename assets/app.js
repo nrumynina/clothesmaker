@@ -10,3 +10,17 @@ import './styles/app.css';
 
 // start the Stimulus application
 import './bootstrap';
+
+$(function () {
+    refreshCartCount();
+})
+
+function refreshCartCount() {
+    $.ajax({
+        url: '/cart/count',
+        type: "GET",
+        success: function (response) {
+            $('#cart-count').text(response['count']);
+        }
+    });
+}

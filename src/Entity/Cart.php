@@ -40,7 +40,10 @@ class Cart
         return $this->id;
     }
 
-    public function getOrders(): ArrayCollection
+    /**
+     * @return ArrayCollection<Order>
+     */
+    public function getOrders()
     {
         return $this->orders;
     }
